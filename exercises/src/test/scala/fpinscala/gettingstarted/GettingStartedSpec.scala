@@ -3,7 +3,7 @@ package fpinscala.gettingstarted
 import scala.annotation.tailrec
 import fpinscala.Spec
 
-class GettingStarted extends Spec {
+class GettingStartedSpec extends Spec {
 
   describe("PolymorphicFunctions") {
     import PolymorphicFunctions._
