@@ -2,10 +2,24 @@ import sbt._
 import Keys._
 
 object FPInScalaBuild extends Build {
+
+  val scalatest = "org.scalatest" %% "scalatest" % "2.0.M5b"
+  val slf4j = "org.slf4j" % "slf4j-api" % "1.7.2"
+  val logback = "ch.qos.logback" % "logback-classic" % "1.0.9"
+  val mockito = "org.mockito" % "mockito-all" % "1.9.5"
+  val akkaActor = "com.typesafe.akka" %% "akka-actor" % "2.1.0"
+
+
   val opts = Project.defaultSettings ++ Seq(
     scalaVersion := "2.10.0",
     resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-    libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.1.0"
+    libraryDependencies ++= Seq(
+        akkaActor,
+        scalatest % "test",
+        slf4j,
+        logback,
+        mockito % "test"
+      )
   )
 
   lazy val root =
