@@ -37,5 +37,34 @@ class ListSpec extends Spec {
       init(List(1, 2, 3, 4)) should be(List(1, 2, 3))
     }
 
+    it("folds right") {
+      foldRight(List(1, 2, 3), 1)(_ * _) should be(6)
+      foldRight(List(1, 2, 3), Nil: List[Int])(Cons(_, _)) should be(List(1, 2, 3))
+
+      foldRight(List("c", "b", "a"), "")(_ + _) should be("cba")
+    }
+
+    it("computes the length using foldRight") {
+      List.length(Nil: List[Int]) should be(0)
+      List.length(List(1, 2, 3)) should be(3)
+    }
+
+    @tailrec
+    def createBigList(l: List[Int], i: Int): List[Int] =
+      if (i > 500000) l
+      else createBigList(prepend(i, l), i + 1)
+    val bigList = createBigList(Nil, 0)
+
+    it("throws a stackOverflow for large lists for foldRight") {
+      intercept[StackOverflowError] {
+        foldRight(bigList, 0)(_ + _)
+      }
+    }
+
+    it("doesn't throw a stackOverflow for large lists for foldLeft") {
+      foldLeft(bigList, 0)(_ + _) //doesn't fail
+      //      foldLeft(List("c", "b", "a"), "")(_ + _) should be("abc")
+    }
+
   }
 }

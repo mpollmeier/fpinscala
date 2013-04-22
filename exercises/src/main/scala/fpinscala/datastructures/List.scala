@@ -71,6 +71,8 @@ object List { // `List` companion object
 
   def setHead[A](l: List[A])(h: A): List[A] = Cons(h, tail(l))
 
+  def prepend[A](a: A, l: List[A]): List[A] = Cons(a, l)
+
   def init[A](l: List[A]): List[A] = {
     def go(l: List[A], acc: List[A]): List[A] = l match {
       case Nil              ⇒ acc
@@ -80,9 +82,14 @@ object List { // `List` companion object
     go(l, Nil)
   }
 
-  def length[A](l: List[A]): Int = sys.error("todo")
+  def length[A](l: List[A]): Int = foldRight(l, 0)((_, b) ⇒ 1 + b)
 
-  def foldLeft[A, B](l: List[A], z: B)(f: (B, A) ⇒ B): B = sys.error("todo")
+  @tailrec
+  def foldLeft[A, B](l: List[A], z: B)(f: (B, A) ⇒ B): B =
+    l match {
+      case Nil              ⇒ z
+      case Cons(head, tail) ⇒ foldLeft(tail, f(z, head))(f)
+    }
 
   def map[A, B](l: List[A])(f: A ⇒ B): List[B] = sys.error("todo")
 }
