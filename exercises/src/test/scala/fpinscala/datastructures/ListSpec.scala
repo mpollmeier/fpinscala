@@ -61,14 +61,24 @@ class ListSpec extends Spec {
       }
     }
 
+    it("doesn't throw a stackOverflow for large lists for foldLeft") {
+      foldLeft(bigList, 0)(_ + _) //doesn't fail
+      foldLeft(List("c", "b", "a"), "")(_ + _) should be("cba")
+    }
+
+    it("sums with foldLeft") {
+      foldLeft(List(1, 2, 3, 4), 0)(_ + _) should be(10)
+      foldLeft(List(1, 2, 3, 4), 1)(_ * _) should be(24)
+      foldLeft(List(1, 2, 3, 4), 0)((a, b) ⇒ a + 1) should be(4)
+    }
+
     it("reverses the list") {
       reverse(Nil) should be(Nil)
       reverse(List(1, 2)) should be(List(2, 1))
     }
 
-    it("doesn't throw a stackOverflow for large lists for foldLeft") {
-      foldLeft(bigList, 0)(_ + _) //doesn't fail
-      foldLeft(List("c", "b", "a"), "")(_ + _) should be("cba")
+    it("appends via foldLeft") {
+      append2(List(1, 2), List(3, 4)) should be(List(1, 2, 3, 4))
     }
 
   }

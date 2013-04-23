@@ -9,7 +9,6 @@ object FPInScalaBuild extends Build {
   val mockito = "org.mockito" % "mockito-all" % "1.9.5"
   val akkaActor = "com.typesafe.akka" %% "akka-actor" % "2.1.0"
 
-
   val opts = Project.defaultSettings ++ Seq(
     scalaVersion := "2.10.0",
     resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
