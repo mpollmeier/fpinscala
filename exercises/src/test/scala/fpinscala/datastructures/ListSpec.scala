@@ -61,9 +61,14 @@ class ListSpec extends Spec {
       }
     }
 
+    it("reverses the list") {
+      reverse(Nil) should be(Nil)
+      reverse(List(1, 2)) should be(List(2, 1))
+    }
+
     it("doesn't throw a stackOverflow for large lists for foldLeft") {
       foldLeft(bigList, 0)(_ + _) //doesn't fail
-      //      foldLeft(List("c", "b", "a"), "")(_ + _) should be("abc")
+      foldLeft(List("c", "b", "a"), "")(_ + _) should be("cba")
     }
 
   }

@@ -84,12 +84,21 @@ object List { // `List` companion object
 
   def length[A](l: List[A]): Int = foldRight(l, 0)((_, b) ⇒ 1 + b)
 
-  @tailrec
-  def foldLeft[A, B](l: List[A], z: B)(f: (B, A) ⇒ B): B =
-    l match {
-      case Nil              ⇒ z
-      case Cons(head, tail) ⇒ foldLeft(tail, f(z, head))(f)
+  def reverse[A](l: List[A]): List[A] = {
+    @tailrec
+    def go(l: List[A], acc: List[A]): List[A] = l match {
+      case Nil              ⇒ acc
+      case Cons(head, tail) ⇒ go(tail, prepend(head, acc))
     }
+
+    go(l, Nil)
+  }
+
+  @tailrec
+  def foldLeft[A, B](l: List[A], z: B)(f: (B, A) ⇒ B): B = l match {
+    case Nil              ⇒ z
+    case Cons(head, tail) ⇒ foldLeft(tail, f(z, head))(f)
+  }
 
   def map[A, B](l: List[A])(f: A ⇒ B): List[B] = sys.error("todo")
 }
