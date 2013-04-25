@@ -116,5 +116,14 @@ object List { // `List` companion object
     go(l, Nil)
   }
 
+  def doubleToString(l: List[Double]): List[String] = {
+    @tailrec
+    def go(l: List[Double], acc: List[String]): List[String] = l match {
+      case Nil              ⇒ reverse(acc)
+      case Cons(head, tail) ⇒ go(tail, prepend(s"$head", acc))
+    }
+    go(l, Nil)
+  }
+
   def map[A, B](l: List[A])(f: A ⇒ B): List[B] = sys.error("todo")
 }

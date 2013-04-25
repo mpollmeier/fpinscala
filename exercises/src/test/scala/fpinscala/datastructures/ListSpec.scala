@@ -90,5 +90,9 @@ class ListSpec extends Spec {
       addOne(List(1, 2, 5)) should be(List(2, 3, 6))
     }
 
+    it("turns Doubles into Strings") {
+      doubleToString(List(1.1, 2.2)) should be(List("1.1", "2.2"))
+    }
+
   }
 }
