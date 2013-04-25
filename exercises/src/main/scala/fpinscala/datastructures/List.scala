@@ -133,4 +133,14 @@ object List { // `List` companion object
     }
     go(l, Nil)
   }
+
+  def filter[A](l: List[A])(f: A ⇒ Boolean): List[A] = {
+    @tailrec
+    def go(l: List[A], acc: List[A]): List[A] = l match {
+      case Nil                ⇒ reverse(acc)
+      case Cons(h, t) if f(h) ⇒ go(t, prepend(h, acc))
+      case Cons(_, t)         ⇒ go(t, acc)
+    }
+    go(l, Nil)
+  }
 }

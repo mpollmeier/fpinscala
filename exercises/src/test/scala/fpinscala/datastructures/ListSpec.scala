@@ -98,5 +98,9 @@ class ListSpec extends Spec {
       map(List(1, 2, 3))(_ * 2) should be(List(2, 4, 6))
     }
 
+    it("filters out odd numbers") {
+      filter(List(1, 2, 3, 4, 5))(_ % 2 == 0) should be(List(2, 4))
+    }
+
   }
 }
