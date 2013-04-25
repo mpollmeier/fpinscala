@@ -107,5 +107,14 @@ object List { // `List` companion object
   def flatten[A](l: List[List[A]]): List[A] =
     foldLeft(l, Nil: List[A])(append(_, _))
 
+  def addOne(l: List[Int]): List[Int] = {
+    @tailrec
+    def go(l: List[Int], acc: List[Int]): List[Int] = l match {
+      case Nil              ⇒ acc
+      case Cons(head, tail) ⇒ go(tail, append(acc, Cons(head + 1, Nil)))
+    }
+    go(l, Nil)
+  }
+
   def map[A, B](l: List[A])(f: A ⇒ B): List[B] = sys.error("todo")
 }

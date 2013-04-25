@@ -86,5 +86,9 @@ class ListSpec extends Spec {
       flatten(List(List(1), List(2, 3), List(4))) should be(List(1, 2, 3, 4))
     }
 
+    it("adds one") {
+      addOne(List(1, 2, 5)) should be(List(2, 3, 6))
+    }
+
   }
 }
