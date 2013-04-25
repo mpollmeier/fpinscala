@@ -104,5 +104,8 @@ object List { // `List` companion object
     case Cons(head, tail) ⇒ foldLeft(tail, f(z, head))(f)
   }
 
+  def flatten[A](l: List[List[A]]): List[A] =
+    foldLeft(l, Nil: List[A])(append(_, _))
+
   def map[A, B](l: List[A])(f: A ⇒ B): List[B] = sys.error("todo")
 }

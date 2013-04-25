@@ -81,5 +81,10 @@ class ListSpec extends Spec {
       append2(List(1, 2), List(3, 4)) should be(List(1, 2, 3, 4))
     }
 
+    it("flattens") {
+      flatten(List(List(1, 2), List(3, 4))) should be(List(1, 2, 3, 4))
+      flatten(List(List(1), List(2, 3), List(4))) should be(List(1, 2, 3, 4))
+    }
+
   }
 }
