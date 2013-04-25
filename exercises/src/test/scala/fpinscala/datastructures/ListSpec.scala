@@ -94,5 +94,9 @@ class ListSpec extends Spec {
       doubleToString(List(1.1, 2.2)) should be(List("1.1", "2.2"))
     }
 
+    it("maps") {
+      map(List(1, 2, 3))(_ * 2) should be(List(2, 4, 6))
+    }
+
   }
 }

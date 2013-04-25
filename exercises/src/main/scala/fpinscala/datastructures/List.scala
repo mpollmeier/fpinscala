@@ -125,5 +125,12 @@ object List { // `List` companion object
     go(l, Nil)
   }
 
-  def map[A, B](l: List[A])(f: A ⇒ B): List[B] = sys.error("todo")
+  def map[A, B](l: List[A])(f: A ⇒ B): List[B] = {
+    @tailrec
+    def go(l: List[A], acc: List[B]): List[B] = l match {
+      case Nil        ⇒ reverse(acc)
+      case Cons(h, t) ⇒ go(t, prepend(f(h), acc))
+    }
+    go(l, Nil)
+  }
 }
