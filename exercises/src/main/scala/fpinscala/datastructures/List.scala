@@ -125,22 +125,21 @@ object List { // `List` companion object
     go(l, Nil)
   }
 
-  def map[A, B](l: List[A])(f: A ⇒ B): List[B] = {
-    @tailrec
-    def go(l: List[A], acc: List[B]): List[B] = l match {
-      case Nil        ⇒ reverse(acc)
-      case Cons(h, t) ⇒ go(t, prepend(f(h), acc))
+  def map[A, B](l: List[A])(f: A ⇒ B): List[B] =
+    foldRight(l, Nil: List[B]) { (a, acc) ⇒
+      Cons(f(a), acc)
     }
-    go(l, Nil)
+
+  def filter[A](l: List[A])(f: A ⇒ Boolean): List[A] =
+    foldRight(l, Nil: List[A])((a: A, l) ⇒ if (f(a)) Cons(a, l) else l)
+
+  def flatMap[A, B](l: List[A])(f: A ⇒ List[B]): List[B] =
+    flatten(map(l)(f))
+
+  def zipAdd(l1: List[Int], l2: List[Int]): List[Int] = (l1, l2) match {
+    case (_, Nil)                     ⇒ Nil
+    case (Nil, _)                     ⇒ Nil
+    case (Cons(h1, t1), Cons(h2, t2)) ⇒ Cons(h1 + h2, zipAdd(t1, t2))
   }
 
-  def filter[A](l: List[A])(f: A ⇒ Boolean): List[A] = {
-    @tailrec
-    def go(l: List[A], acc: List[A]): List[A] = l match {
-      case Nil                ⇒ reverse(acc)
-      case Cons(h, t) if f(h) ⇒ go(t, prepend(h, acc))
-      case Cons(_, t)         ⇒ go(t, acc)
-    }
-    go(l, Nil)
-  }
 }
