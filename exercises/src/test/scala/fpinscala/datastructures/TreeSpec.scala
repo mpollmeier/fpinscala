@@ -17,9 +17,9 @@ class TreeSpec extends Spec {
       maximum(Branch(Leaf(2), Branch(Leaf(5), Leaf(4)))) should be(5)
     }
 
-    it("get's the maximum patch length") {
-      depth(Leaf(2)) should be(1)
-      depth(Branch(Leaf(2), Branch(Leaf(5), Leaf(4)))) should be(3)
+    it("get's the maximum path length") {
+      depth(Leaf(2)) should be(0)
+      depth(Branch(Leaf(2), Branch(Leaf(5), Leaf(4)))) should be(2)
     }
 
     it("maps") {
