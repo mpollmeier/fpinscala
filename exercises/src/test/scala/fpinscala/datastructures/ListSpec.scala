@@ -108,6 +108,17 @@ class ListSpec extends Spec {
 
     it("zip adds") {
       zipAdd(List(1, 2, 3), List(4, 5, 6)) should be(List(5, 7, 9))
+      zipMap(List(1, 2, 3), List(4, 5, 6))(_ + _) should be(List(5, 7, 9))
+    }
+
+    ignore("finds subsequence") {
+      //      hasSubsequence(List(1, 2, 3, 4), List(1, 5)) should be(false)
+      //      hasSubsequence(List(1, 2, 3, 4), List(1, 2)) should be(true)
+      //      hasSubsequence(List(1, 2, 3, 4), List(2, 3)) should be(true)
+      //      hasSubsequence(List(1, 2, 3, 4), List(4)) should be(true)
+      //      hasSubsequence(List(1, 2), List(2)) should be(true)
+      //      hasSubsequence(List(1, 2), List(1)) should be(true)
+      //      hasSubsequence(List(1, 2), List(1, 2)) should be(true)
     }
 
   }

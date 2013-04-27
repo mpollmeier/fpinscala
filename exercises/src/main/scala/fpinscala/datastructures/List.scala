@@ -142,4 +142,29 @@ object List { // `List` companion object
     case (Cons(h1, t1), Cons(h2, t2)) ⇒ Cons(h1 + h2, zipAdd(t1, t2))
   }
 
+  def zipMap[A, B](l1: List[A], l2: List[A])(f: (A, A) ⇒ B): List[B] = (l1, l2) match {
+    case (_, Nil)                     ⇒ Nil
+    case (Nil, _)                     ⇒ Nil
+    case (Cons(h1, t1), Cons(h2, t2)) ⇒ Cons(f(h1, h2), zipMap(t1, t2)(f))
+  }
+
+  def hasSubsequence[A](l: List[A], sub: List[A]): Boolean = {
+    @tailrec
+    def subsequences(l: List[A], acc: List[List[A]]): List[List[A]] = l match {
+      case Nil        ⇒ acc
+      case Cons(h, t) ⇒ subsequences(t, prepend(append(List(h), l), prepend(t, acc)))
+      //      case Cons(h, t) ⇒ subsequences(t, Cons(t, acc))
+    }
+
+    @tailrec
+    def contains(l: List[List[A]], a: List[A]): Boolean = l match {
+      case Nil                  ⇒ false
+      case Cons(h, _) if h == a ⇒ true
+      case Cons(h, t)           ⇒ contains(t, a)
+    }
+
+    val all = subsequences(l, Nil)
+    println(s"all: $all")
+    contains(all, sub)
+  }
 }
