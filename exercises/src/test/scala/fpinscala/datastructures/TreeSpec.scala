@@ -11,20 +11,29 @@ class TreeSpec extends Spec {
       treeSize(Leaf(Unit)) should be(1)
       treeSize(Branch(Leaf(Unit), Leaf(Unit))) should be(3)
       treeSize(Branch(Leaf(Unit), Branch(Leaf(Unit), Leaf(Unit)))) should be(5)
+
+      treeSize2(Leaf(Unit)) should be(1)
+      treeSize2(Branch(Leaf(Unit), Leaf(Unit))) should be(3)
+      treeSize2(Branch(Leaf(Unit), Branch(Leaf(Unit), Leaf(Unit)))) should be(5)
     }
 
     it("get's the maximum") {
       maximum(Branch(Leaf(2), Branch(Leaf(5), Leaf(4)))) should be(5)
+      maximum2(Branch(Leaf(2), Branch(Leaf(5), Leaf(4)))) should be(5)
     }
 
-    it("get's the maximum path length") {
+    it("get's the depth") {
       depth(Leaf(2)) should be(0)
       depth(Branch(Leaf(2), Branch(Leaf(5), Leaf(4)))) should be(2)
+
+      depth2(Leaf(2)) should be(0)
+      depth2(Branch(Leaf(2), Branch(Leaf(5), Leaf(4)))) should be(2)
     }
 
     it("maps") {
       map(Leaf(2))(_ + 1) should be(Leaf(3))
       map(Branch(Leaf(2), Branch(Leaf(5), Leaf(4))))(_ * 2) should be(Branch(Leaf(4), Branch(Leaf(10), Leaf(8))))
     }
+
   }
 }
