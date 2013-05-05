@@ -2,10 +2,9 @@ package fpinscala.errorhandling
 import fpinscala.Spec
 
 class ErrorHandlingSpec extends Spec {
-  describe("Option") {
+  describe("MyOption") {
 
     object MyOption {
-
       sealed trait Option[+A] {
         def map[B](f: A ⇒ B): Option[B] = flatMap(x ⇒ Some(f(x)))
 
@@ -36,7 +35,6 @@ class ErrorHandlingSpec extends Spec {
     }
 
     import MyOption._
-
     it("maps") {
       Some(2).map(_ * 2) should be(Some(4))
     }
@@ -55,5 +53,13 @@ class ErrorHandlingSpec extends Spec {
       None.orElse(Some(4)) should be(Some(4))
     }
 
+  }
+
+  describe("given option") {
+    it("computes variance") {
+      Option.mean(Seq(1.0, 3.0)) should be(Some(2.0))
+
+      Option.variance(Seq(1.0, 3.0)) should be(Some(1.0))
+    }
   }
 }
