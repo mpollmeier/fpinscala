@@ -74,5 +74,10 @@ class ErrorHandlingSpec extends Spec {
       Option.sequence(List(Some(1), None, Some(2))) should be(None)
       Option.sequence(List(Some(1), Some(2))) should be(Some(List(1, 2)))
     }
+
+    it("sequences_2") {
+      Option.sequence_2(List(Some(1), None, Some(2))) should be(None)
+      Option.sequence_2(List(Some(1), Some(2))) should be(Some(List(1, 2)))
+    }
   }
 }

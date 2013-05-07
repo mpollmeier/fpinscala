@@ -116,12 +116,21 @@ object Option {
     @tailrec
     def go(a: List[Option[A]], acc: List[A]): Option[List[A]] = a match {
       case Nil          ⇒ Some(acc)
-      case Some(h) :: t ⇒ go(t, acc :+ h)
       case None :: t    ⇒ None
+      case Some(h) :: t ⇒ go(t, acc :+ h)
     }
-    go(a, List())
+    go(a, Nil)
   }
 
-  def traverse[A, B](a: List[A])(f: A ⇒ Option[B]): Option[List[B]] = sys.error("todo")
+  def traverse[A, B](a: List[A])(f: A ⇒ Option[B]): Option[List[B]] = {
+    def go(a: List[A], acc: List[B]): Option[List[B]] = a match {
+      case Nil    ⇒ Some(acc)
+      case h :: t ⇒ f(h).flatMap { fa ⇒ go(t, acc :+ fa) }
+    }
+    go(a, Nil)
+  }
+
+  def sequence_2[A](a: List[Option[A]]): Option[List[A]] =
+    traverse(a)(a ⇒ a)
 }
 
