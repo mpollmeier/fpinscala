@@ -69,5 +69,10 @@ class ErrorHandlingSpec extends Spec {
     it("bothMatch_2") {
       Option.bothMatch_2("ab", "..", "ab") should be(Some(true))
     }
+
+    it("sequences") {
+      Option.sequence(List(Some(1), None, Some(2))) should be(None)
+      Option.sequence(List(Some(1), Some(2))) should be(Some(List(1, 2)))
+    }
   }
 }

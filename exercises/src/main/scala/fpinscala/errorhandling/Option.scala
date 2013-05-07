@@ -1,5 +1,7 @@
 package fpinscala.errorhandling
 
+import scala.annotation.tailrec
+
 sealed trait Option[+A] {
   def map[B](f: A ⇒ B): Option[B] = this match {
     case None    ⇒ None
@@ -110,7 +112,15 @@ object Option {
   def bothMatch_2(pat1: String, pat2: String, s: String): Option[Boolean] =
     map2(mkMatcher(pat1), mkMatcher(pat2))(_(s) && _(s))
 
-  def sequence[A](a: List[Option[A]]): Option[List[A]] = sys.error("todo")
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = {
+    @tailrec
+    def go(a: List[Option[A]], acc: List[A]): Option[List[A]] = a match {
+      case Nil          ⇒ Some(acc)
+      case Some(h) :: t ⇒ go(t, acc :+ h)
+      case None :: t    ⇒ None
+    }
+    go(a, List())
+  }
 
   def traverse[A, B](a: List[A])(f: A ⇒ Option[B]): Option[List[B]] = sys.error("todo")
 }
