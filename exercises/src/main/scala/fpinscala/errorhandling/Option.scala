@@ -95,11 +95,23 @@ object Option {
   def variance(xs: Seq[Double]): Option[Double] =
     mean(xs).flatMap(m ⇒ mean(xs.map(x ⇒ math.pow(x - m, 2))))
 
-  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) ⇒ C): Option[C] = sys.error("todo")
+  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) ⇒ C): Option[C] =
+    for {
+      a1 ← a
+      b1 ← b
+    } yield f(a1, b1)
 
-  def bothMatch_2(pat1: String, pat2: String, s: String): Option[Boolean] = sys.error("todo")
+  def map2_2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) ⇒ C): Option[C] =
+    (a, b) match {
+      case (Some(a), Some(b)) ⇒ Some(f(a, b))
+      case _                  ⇒ None
+    }
+
+  def bothMatch_2(pat1: String, pat2: String, s: String): Option[Boolean] =
+    map2(mkMatcher(pat1), mkMatcher(pat2))(_(s) && _(s))
 
   def sequence[A](a: List[Option[A]]): Option[List[A]] = sys.error("todo")
 
   def traverse[A, B](a: List[A])(f: A ⇒ Option[B]): Option[List[B]] = sys.error("todo")
 }
+

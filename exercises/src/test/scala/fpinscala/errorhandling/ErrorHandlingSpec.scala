@@ -52,14 +52,22 @@ class ErrorHandlingSpec extends Spec {
       Some(2).orElse(Some(4)) should be(Some(2))
       None.orElse(Some(4)) should be(Some(4))
     }
-
   }
 
   describe("given option") {
     it("computes variance") {
       Option.mean(Seq(1.0, 3.0)) should be(Some(2.0))
-
       Option.variance(Seq(1.0, 3.0)) should be(Some(1.0))
+    }
+
+    it("map2") {
+      Option.map2(Some(1), Some(2))(_ + _) should be(Some(3))
+      Option.map2(None: Option[Int], Some(2))(_ + _) should be(None)
+      Option.map2(Some(1), None: Option[Int])(_ + _) should be(None)
+    }
+
+    it("bothMatch_2") {
+      Option.bothMatch_2("ab", "..", "ab") should be(Some(true))
     }
   }
 }
