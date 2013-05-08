@@ -80,4 +80,22 @@ class ErrorHandlingSpec extends Spec {
       Option.sequence_2(List(Some(1), Some(2))) should be(Some(List(1, 2)))
     }
   }
+
+  describe("Either") {
+    it("maps") {
+      Right(2).map(_ * 2) should be(Right(4))
+    }
+
+    it("flatMaps") {
+      Right(2).flatMap(r ⇒ Right(r * 2)) should be(Right(4))
+    }
+
+    it("orElses") {
+      Left("err").orElse(Right(2)) should be(Right(2))
+    }
+
+    it("maps2") {
+      Right(2).map2(Right(2))(_ + _) should be(Right(4))
+    }
+  }
 }
