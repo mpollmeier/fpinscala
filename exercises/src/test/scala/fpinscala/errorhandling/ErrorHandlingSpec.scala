@@ -79,6 +79,11 @@ class ErrorHandlingSpec extends Spec {
       Option.sequence_2(List(Some(1), None, Some(2))) should be(None)
       Option.sequence_2(List(Some(1), Some(2))) should be(Some(List(1, 2)))
     }
+
+    it("traverses") {
+      Option.traverse(List(1, 2))(x ⇒ if (x == 1) Some(42) else None) should be(None)
+      Option.traverse(List(1, 2))(x ⇒ Some(x * 2)) should be(Some(List(2, 4)))
+    }
   }
 
   describe("Either") {
@@ -96,6 +101,25 @@ class ErrorHandlingSpec extends Spec {
 
     it("maps2") {
       Right(2).map2(Right(2))(_ + _) should be(Right(4))
+    }
+
+    it("supports for compressions") {
+      val res = for {
+        age ← Right(42)
+        name ← Left("invalid name")
+        salary ← Right(1000000.0)
+      } yield (name, age, salary)
+      res should be(Left("invalid name"))
+    }
+
+    it("sequences") {
+      Either.sequence(List(Right(1), Left(2), Right(3))) should be(Left(2))
+      Either.sequence(List(Right(1), Right(2))) should be(Right(List(1, 2)))
+    }
+
+    it("traverses") {
+      Either.traverse(List(1, 2))(x ⇒ if (x == 1) Right(42) else Left(-1)) should be(Left(-1))
+      Either.traverse(List(1, 2))(x ⇒ Right(x * 2)) should be(Right(List(2, 4)))
     }
   }
 }
