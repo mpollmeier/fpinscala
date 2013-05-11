@@ -4,6 +4,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.Future
 import scala.concurrent.Await
+import scala.reflect.runtime.universe._
 
 class FutureCompositionSpec extends Spec {
 
@@ -27,5 +28,6 @@ class FutureCompositionSpec extends Spec {
       Await.result(destiny(Future { true }), 1 second) should be(42)
       Await.result(destiny(Future { false }), 1 second) should be(-1)
     }
+
   }
 }
