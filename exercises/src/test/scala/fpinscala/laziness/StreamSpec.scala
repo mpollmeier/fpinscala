@@ -20,5 +20,14 @@ class StreamSpec extends Spec {
       cons(1, cons(2, cons(3, empty))).takeWhile(_ < 3).toList should be(List(1, 2))
     }
 
+    it("forAlls") {
+      cons(1, cons(2, cons(3, empty))).forAll(_ > 0) should be(true)
+      cons(1, cons(2, cons(3, empty))).forAll(_ < 2) should be(false)
+    }
+
+    it("can take elements while < 3 with foldRight") {
+      cons(1, cons(2, cons(3, empty))).takeWhile2(_ < 3).toList should be(List(1, 2))
+    }
+
   }
 }
