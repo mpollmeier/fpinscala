@@ -55,7 +55,10 @@ object Stream {
   def constant[A](a: A): Stream[A] = cons(a, constant(a))
   def from(n: Int): Stream[Int] = cons(n, from(n + 1))
 
-  def unfold[A, S](z: S)(f: S ⇒ Option[(A, S)]): Stream[A] = sys.error("todo")
+  def unfold[A, S](z: S)(f: S ⇒ Option[(A, S)]): Stream[A] = f(z) match {
+    case None         ⇒ empty[A]
+    case Some((a, s)) ⇒ cons(a, unfold(s)(f))
+  }
 
   def startsWith[A](s: Stream[A], s2: Stream[A]): Boolean = sys.error("todo")
 }
