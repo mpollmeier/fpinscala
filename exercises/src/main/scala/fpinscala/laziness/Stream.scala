@@ -28,8 +28,15 @@ trait Stream[+A] {
     case _                    ⇒ empty
   }
 
-  def forAll(p: A ⇒ Boolean): Boolean = foldRight(true)((a, b) ⇒ p(a) && b)
-  def takeWhile2(p: A ⇒ Boolean): Stream[A] = foldRight(empty: Stream[A])((a, b) ⇒ if (p(a)) cons(a, b) else b)
+  def forAll(p: A ⇒ Boolean): Boolean =
+    foldRight(true)((a, b) ⇒ p(a) && b)
+
+  def takeWhile2(p: A ⇒ Boolean): Stream[A] =
+    foldRight(empty: Stream[A])((a, b) ⇒ if (p(a)) cons(a, b) else b)
+
+  def map[B](fun: A ⇒ B): Stream[B] =
+    foldRight(empty[B])((a, b) ⇒ cons(fun(a), b))
+
 }
 object Stream {
   def empty[A]: Stream[A] =
@@ -45,7 +52,8 @@ object Stream {
     else cons(as.head, apply(as.tail: _*))
 
   val ones: Stream[Int] = cons(1, ones)
-  def from(n: Int): Stream[Int] = sys.error("todo")
+  def constant[A](a: A): Stream[A] = cons(a, constant(a))
+  def from(n: Int): Stream[Int] = cons(n, from(n + 1))
 
   def unfold[A, S](z: S)(f: S ⇒ Option[(A, S)]): Stream[A] = sys.error("todo")
 

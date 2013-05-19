@@ -29,5 +29,9 @@ class StreamSpec extends Spec {
       cons(1, cons(2, cons(3, empty))).takeWhile2(_ < 3).toList should be(List(1, 2))
     }
 
+    it("maps") {
+      cons(1, cons(2, cons(3, empty))).map(_ * 2).toList should be(List(2, 4, 6))
+    }
+
   }
 }
